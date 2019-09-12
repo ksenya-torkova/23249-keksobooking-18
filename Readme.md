@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Ксения Торкова](https://up.htmlacademy.ru/javascript/18/user/23249).
-* Наставник: `[Евгений Лепёшкин](https://up.htmlacademy.ru/javascript/18/user/144641)`.
+* Наставник: [Евгений Лепёшкин](https://up.htmlacademy.ru/javascript/18/user/144641).
 
 ---
 
