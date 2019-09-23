@@ -38,6 +38,11 @@ var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
 
+var MAP_X_MIN = 0;
+var MAP_X_MAX = document.querySelector('.map').offsetWidth;
+var MAP_Y_MIN = 130;
+var MAP_Y_MAX = 630;
+
 var getRandomInteger = function (min, max) {
   var randomNumber = min + Math.random() * (max + 1 - min);
   return Math.floor(randomNumber);
@@ -49,8 +54,8 @@ var createAnnouncement = function (props) {
   var features = FEATURES;
   features.length = getRandomInteger(0, FEATURES.length);
   var location = {
-    x: getRandomInteger(0, 1200),
-    y: getRandomInteger(130, 630)
+    x: getRandomInteger(MAP_X_MIN, MAP_X_MAX),
+    y: getRandomInteger(MAP_Y_MIN, MAP_Y_MAX)
   };
 
   var announcement = {
@@ -80,7 +85,7 @@ var createAnnouncement = function (props) {
 };
 
 var map = document.querySelector('.map');
-map.classList.remove('.map--faded');
+map.classList.remove('map--faded');
 var pinTemplate = document.querySelector('#pin').content;
 var pinTemplateItem = pinTemplate.querySelector('.map__pin');
 var pinFragment = document.createDocumentFragment();
