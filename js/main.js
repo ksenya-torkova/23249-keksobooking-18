@@ -1,5 +1,9 @@
 'use strict';
 
+var PINS_AMOUNT = 8;
+var PIN_WIDTH = 50;
+var PIN_HEIGHT = 70;
+
 var CHECK_IN = [
   '12:00',
   '13:00',
@@ -75,4 +79,28 @@ var createAnnouncement = function (props) {
   return announcement;
 };
 
-createAnnouncement({index: 1});
+var map = document.querySelector('.map');
+map.classList.remove('.map--faded');
+var pinTemplate = document.querySelector('#pin').content;
+var pinTemplateItem = pinTemplate.querySelector('.map__pin');
+var pinFragment = document.createDocumentFragment();
+
+var getTemplateOfPin = function (announcementItem) {
+  var pinMarkup = pinTemplateItem.cloneNode(true);
+  pinMarkup.querySelector('img').src = announcementItem.author.avatar;
+  pinMarkup.querySelector('img').alt = announcementItem.offer.title;
+  pinMarkup.style.left = (announcementItem.location.x - PIN_WIDTH / 2) + 'px';
+  pinMarkup.style.top = (announcementItem.location.y - PIN_HEIGHT) + 'px';
+  pinFragment.appendChild(pinMarkup);
+};
+
+var renderPins = function () {
+  for (var i = 0; i < PINS_AMOUNT; i++) {
+    getTemplateOfPin(createAnnouncement({index: i}));
+  }
+
+  var pinsBlock = map.querySelector('.map__pins');
+  pinsBlock.appendChild(pinFragment);
+};
+
+renderPins();
