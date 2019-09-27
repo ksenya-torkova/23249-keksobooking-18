@@ -49,64 +49,60 @@ var MAP_X_MIN = 0;
 var MAP_Y_MIN = 130;
 var MAP_Y_MAX = 630;
 
+var pins = [];
 var map = document.querySelector('.map');
 var mapXMax = map.offsetWidth;
 map.classList.remove('map--faded');
 
-// выбор случайного значения из диапазона
 var getRandomInteger = function (min, max) {
-  var randomNumber = min + Math.random() * (max + 1 - min);
-  return Math.floor(randomNumber);
+  return Math.floor(min + Math.random() * (max + 1 - min));
 };
 
-// выбор уникального и случайного элемента из массива
-var getRandomUniqueItem = function (arr) {
-  return arr.splice(getRandomInteger(0, arr.length - 1), 1);
-};
-
-// генерация массива случайной длины на основе имеющегося
-var getRandomArray = function (arr) {
-  var newArray = [];
-  var arrCopy = arr.slice();
-
-  for (var i = 0; i < getRandomInteger(0, arr.length); i++) {
-    newArray[i] = getRandomUniqueItem(arrCopy);
+var shuffleArray = function (arr, length) {
+  // тасование массива по алгоритму Фишера-Йетса
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var x = arr[i];
+    arr[i] = arr[j];
+    arr[j] = x;
   }
 
-  return newArray;
+  // если нужен массив случайной длины, передается и используется параметр length, иначе массив сохраняет исходную длину
+  arr.length = length ? length : arr.length;
+
+  return arr;
 };
 
-var createAnnouncement = function (props) {
-  var location = {
-    x: getRandomInteger(MAP_X_MIN, mapXMax),
-    y: getRandomInteger(MAP_Y_MIN, MAP_Y_MAX)
-  };
+var createAnnouncement = function () {
+  for (var i = 0; i < PINS_AMOUNT; i++) {
+    pins.push({
+      author: {
+        avatar: 'img/avatars/user0' + (i + 1) + '.png'
+      },
 
-  var announcement = {
-    author: {
-      avatar: 'img/avatars/user0' + (props.index + 1) + '.png'
-    },
-    offer: {
-      title: 'title',
-      address: location.x + ', ' + location.y,
-      price: 0,
-      type: TYPES[getRandomInteger(0, TYPES.length - 1)],
-      rooms: 0,
-      guests: 0,
-      checkin: CHECK_IN[getRandomInteger(0, CHECK_IN.length - 1)],
-      checkout: CHECK_OUT[getRandomInteger(0, CHECK_OUT.length - 1)],
-      features: getRandomArray(FEATURES),
-      description: 'description',
-      photos: getRandomArray(PHOTOS)
-    },
-    location: {
-      x: location.x,
-      y: location.y
-    }
-  };
+      offer: {
+        title: 'title',
+        address: getRandomInteger(MAP_X_MIN, mapXMax) + ', ' + getRandomInteger(MAP_Y_MIN, MAP_Y_MAX),
+        price: 0,
+        type: TYPES[getRandomInteger(0, TYPES.length - 1)],
+        rooms: 0,
+        guests: 0,
+        checkin: CHECK_IN[getRandomInteger(0, CHECK_IN.length - 1)],
+        checkout: CHECK_OUT[getRandomInteger(0, CHECK_OUT.length - 1)],
+        features: shuffleArray(FEATURES.slice(), getRandomInteger(0, FEATURES.length)),
+        description: 'description',
+        photos: shuffleArray(PHOTOS.slice(), getRandomInteger(0, PHOTOS.length))
+      },
 
-  return announcement;
+      location: {
+        x: getRandomInteger(MAP_X_MIN, mapXMax),
+        y: getRandomInteger(MAP_Y_MIN, MAP_Y_MAX)
+      }
+    });
+  }
 };
+
+createAnnouncement();
 
 var pinTemplate = document.querySelector('#pin').content;
 var pinTemplateItem = pinTemplate.querySelector('.map__pin');
@@ -114,20 +110,22 @@ var pinFragment = document.createDocumentFragment();
 
 var getTemplateOfPin = function (announcementItem) {
   var pinMarkup = pinTemplateItem.cloneNode(true);
+
   pinMarkup.querySelector('img').src = announcementItem.author.avatar;
   pinMarkup.querySelector('img').alt = announcementItem.offer.title;
   pinMarkup.style.left = (announcementItem.location.x - PIN_WIDTH / 2) + 'px';
   pinMarkup.style.top = (announcementItem.location.y - PIN_HEIGHT) + 'px';
   pinMarkup.tabIndex = '0';
-  pinFragment.appendChild(pinMarkup);
+
+  return pinMarkup;
 };
 
+var pinsBlock = map.querySelector('.map__pins');
 var renderPins = function () {
   for (var i = 0; i < PINS_AMOUNT; i++) {
-    getTemplateOfPin(createAnnouncement({index: i}));
+    pinFragment.appendChild(getTemplateOfPin(pins[i]));
   }
 
-  var pinsBlock = map.querySelector('.map__pins');
   pinsBlock.appendChild(pinFragment);
 };
 
@@ -135,7 +133,7 @@ renderPins();
 
 var getFeaturesList = function (list, items) {
   var listClass = list.className;
-  var listItemTemplate = cardTemplate.querySelector('.' + listClass + ' li'); // беру первую попавшуюся фичу в списке в качестве шаблона
+  var listItemTemplate = cardTemplate.querySelector('.' + listClass + ' li');
   var cardListFragment = document.createDocumentFragment();
 
   for (var i = 0; i < items.length; i++) {
@@ -166,9 +164,11 @@ var getCardPhotos = function (block, items) {
 var cardTemplate = document.querySelector('#card').content;
 var cardTemplateItem = cardTemplate.querySelector('.map__card');
 var cardFragment = document.createDocumentFragment();
+var filtersBlock = map.querySelector('.map__filters-container');
 
 var getTemplateOfCard = function (announcementItem) {
   var cardMarkup = cardTemplateItem.cloneNode(true);
+
   cardMarkup.querySelector('.popup__avatar').src = announcementItem.author.avatar;
   cardMarkup.querySelector('.popup__title').textContent = announcementItem.offer.title;
   cardMarkup.querySelector('.popup__text--address').textContent = announcementItem.offer.address;
@@ -184,13 +184,9 @@ var getTemplateOfCard = function (announcementItem) {
   var cardPhotosBlock = cardMarkup.querySelector('.popup__photos');
   getCardPhotos(cardPhotosBlock, announcementItem.offer.photos);
 
-  cardFragment.appendChild(cardMarkup);
+  return cardMarkup;
 };
 
-var announcementItem = createAnnouncement({index: 0});
-
-getTemplateOfCard(announcementItem);
-
-var filtersBlock = map.querySelector('.map__filters-container');
+cardFragment.appendChild(getTemplateOfCard(pins[0]));
 
 map.insertBefore(cardFragment, filtersBlock);
