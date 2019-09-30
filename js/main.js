@@ -261,6 +261,7 @@ var roomCapacitySelect = announcementForm.querySelector('#capacity');
 
 var checkRoomsValidity = function () {
   console.log(roomNumberSelectSelected);
+  console.log(roomNumberSelect.selectedIndex);
 };
 
 roomNumberSelect.addEventListener('change', function () {
