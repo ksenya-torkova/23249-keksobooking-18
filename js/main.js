@@ -249,19 +249,22 @@ mapMainPin.addEventListener('keydown', function (evt) {
 });
 
 var ROOMS_AMOUNT_VALUES = {
-  '1 комната': ['для 1 гостя'],
-  '2 комнаты': ['для 1 гостя', 'для 2 гостей'],
-  '3 комнаты': ['для 1 гостя', 'для 2 гостей', 'для 3 гостей'],
-  '100 комнат': 'не для гостей'
+  '1': ['1'],
+  '2': ['1', '2'],
+  '3': ['1', '2', '3'],
+  '100': ['0']
 };
 
 var roomNumberSelect = announcementForm.querySelector('#room_number');
-var roomNumberSelectSelected = roomNumberSelect.querySelector('option[selected]');
 var roomCapacitySelect = announcementForm.querySelector('#capacity');
 
 var checkRoomsValidity = function () {
-  console.log(roomNumberSelectSelected);
-  console.log(roomNumberSelect.selectedIndex);
+  if (roomCapacitySelect.options.length > 0) {
+    [].forEach.call(roomCapacitySelect.options, function (item) {
+      item.selected = (ROOMS_AMOUNT_VALUES[roomNumberSelect.value][0] === item.value) ? true : false;
+      item.hidden = (ROOMS_AMOUNT_VALUES[roomNumberSelect.value].indexOf(item.value) >= 0) ? false : true;
+    });
+  }
 };
 
 roomNumberSelect.addEventListener('change', function () {
