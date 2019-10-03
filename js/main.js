@@ -3,6 +3,8 @@
 var PINS_AMOUNT = 8;
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
+var MAP_MAIN_PIN_EDGE_HEIGHT = 22;
+var ENTER_KEYCODE = 13;
 
 var CHECK_IN = [
   '12:00',
@@ -45,6 +47,7 @@ var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
 
+
 var MAP_X_MIN = 0;
 var MAP_Y_MIN = 130;
 var MAP_Y_MAX = 630;
@@ -52,7 +55,6 @@ var MAP_Y_MAX = 630;
 var pins = [];
 var map = document.querySelector('.map');
 var mapXMax = map.offsetWidth;
-map.classList.remove('map--faded');
 
 var getRandomInteger = function (min, max) {
   return Math.floor(min + Math.random() * (max + 1 - min));
@@ -102,8 +104,6 @@ var createAnnouncement = function () {
   }
 };
 
-createAnnouncement();
-
 var pinTemplate = document.querySelector('#pin').content;
 var pinTemplateItem = pinTemplate.querySelector('.map__pin');
 var pinFragment = document.createDocumentFragment();
@@ -128,8 +128,6 @@ var renderPins = function () {
 
   pinsBlock.appendChild(pinFragment);
 };
-
-renderPins();
 
 var getFeaturesList = function (list, items) {
   var listClass = list.className;
@@ -187,6 +185,86 @@ var getTemplateOfCard = function (announcementItem) {
   return cardMarkup;
 };
 
-cardFragment.appendChild(getTemplateOfCard(pins[0]));
+var mapMainPin = map.querySelector('.map__pin--main');
+var mapMainPinWidth = mapMainPin.offsetWidth;
+var mapMainPinHeight = mapMainPin.offsetHeight;
+var mapMainPinActiveHeight = mapMainPin.offsetHeight + MAP_MAIN_PIN_EDGE_HEIGHT;
+var filterForm = map.querySelector('.map__filters');
+var filterFormSection = filterForm.querySelector('fieldset');
+var filterFormSelects = filterForm.querySelector('select');
+var announcementForm = document.querySelector('.ad-form');
+var announcementFormSections = announcementForm.querySelectorAll('fieldset');
+var announcementAddress = announcementForm.querySelector('#address');
 
-map.insertBefore(cardFragment, filtersBlock);
+var inactivateMap = function () {
+  map.classList.add('map--faded');
+  announcementForm.classList.add('ad-form--disabled');
+  filterFormSection.disabled = 'disabled';
+
+  for (var i = 0; i < filterFormSelects.length; i++) {
+    filterFormSelects[i].disabled = 'disabled';
+  }
+
+  for (var j = 0; j < announcementFormSections.length; j++) {
+    announcementFormSections[j].disabled = 'disabled';
+  }
+
+  announcementAddress.value = (parseInt(mapMainPin.style.left, 10) - mapMainPinWidth / 2).toFixed() + ', ' + (parseInt(mapMainPin.style.top, 10) - mapMainPinHeight / 2).toFixed();
+};
+
+inactivateMap();
+
+var activateMap = function () {
+  map.classList.remove('map--faded');
+  announcementForm.classList.remove('ad-form--disabled');
+  filterFormSection.disabled = '';
+
+  createAnnouncement();
+  renderPins();
+
+  cardFragment.appendChild(getTemplateOfCard(pins[0]));
+  map.insertBefore(cardFragment, filtersBlock);
+
+  for (var i = 0; i < filterFormSelects.length; i++) {
+    filterFormSelects[i].disabled = '';
+  }
+
+  for (var j = 0; j < announcementFormSections.length; j++) {
+    announcementFormSections[j].disabled = '';
+  }
+
+  announcementAddress.value = (parseInt(mapMainPin.style.left, 10) - mapMainPinWidth / 2).toFixed() + ', ' + (parseInt(mapMainPin.style.top, 10) - mapMainPinActiveHeight / 2).toFixed();
+};
+
+mapMainPin.addEventListener('mousedown', function () {
+  activateMap();
+});
+
+mapMainPin.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    activateMap();
+  }
+});
+
+var ROOMS_AMOUNT_VALUES = {
+  '1': ['1'],
+  '2': ['1', '2'],
+  '3': ['1', '2', '3'],
+  '100': ['0']
+};
+
+var roomNumberSelect = announcementForm.querySelector('#room_number');
+var roomCapacitySelect = announcementForm.querySelector('#capacity');
+
+var checkRoomsValidity = function () {
+  if (roomCapacitySelect.options.length > 0) {
+    [].forEach.call(roomCapacitySelect.options, function (item) {
+      item.selected = (ROOMS_AMOUNT_VALUES[roomNumberSelect.value][0] === item.value) ? true : false;
+      item.hidden = (ROOMS_AMOUNT_VALUES[roomNumberSelect.value].indexOf(item.value) >= 0) ? false : true;
+    });
+  }
+};
+
+roomNumberSelect.addEventListener('change', function () {
+  checkRoomsValidity();
+});
