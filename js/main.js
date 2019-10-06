@@ -52,6 +52,35 @@ var MAP_X_MIN = 0;
 var MAP_Y_MIN = 130;
 var MAP_Y_MAX = 630;
 
+var ROOMS_AMOUNT_VALUES = {
+  '1': ['1'],
+  '2': ['1', '2'],
+  '3': ['1', '2', '3'],
+  '100': ['0']
+};
+
+var HOUSING_DATA = {
+  bungalo: {
+    ru: 'Бунгало',
+    price: 0
+  },
+
+  flat: {
+    ru: 'Квартира',
+    price: 1000
+  },
+
+  house: {
+    ru: 'Дом',
+    price: 5000
+  },
+
+  palace: {
+    ru: 'Дворец',
+    price: 10000
+  }
+};
+
 var pins = [];
 var map = document.querySelector('.map');
 var mapXMax = map.offsetWidth;
@@ -316,13 +345,6 @@ mapMainPin.addEventListener('keydown', function (evt) {
   }
 });
 
-var ROOMS_AMOUNT_VALUES = {
-  '1': ['1'],
-  '2': ['1', '2'],
-  '3': ['1', '2', '3'],
-  '100': ['0']
-};
-
 var roomNumberSelect = announcementForm.querySelector('#room_number');
 var roomCapacitySelect = announcementForm.querySelector('#capacity');
 
@@ -337,4 +359,23 @@ var checkRoomsValidity = function () {
 
 roomNumberSelect.addEventListener('change', function () {
   checkRoomsValidity();
+});
+
+var timeInSelect = announcementForm.querySelector('#timein');
+var timeOutSelect = announcementForm.querySelector('#timeout');
+
+timeInSelect.addEventListener('change', function () {
+  timeOutSelect.value = timeInSelect.value;
+});
+
+timeOutSelect.addEventListener('change', function () {
+  timeInSelect.value = timeOutSelect.value;
+});
+
+var housingTypeSelect = announcementForm.querySelector('#type');
+var housingPriceSelect = announcementForm.querySelector('#price');
+
+housingTypeSelect.addEventListener('change', function () {
+  housingPriceSelect.placeholder = HOUSING_DATA[housingTypeSelect.value].price;
+  housingPriceSelect.min = HOUSING_DATA[housingTypeSelect.value].price;
 });
