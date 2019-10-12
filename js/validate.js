@@ -8,8 +8,8 @@
     '100': ['0']
   };
 
-  var roomNumberSelect = window.map.announcementForm.querySelector('#room_number');
-  var roomCapacitySelect = window.map.announcementForm.querySelector('#capacity');
+  var roomNumberSelect = window.dragAndDrop.announcementForm.querySelector('#room_number');
+  var roomCapacitySelect = window.dragAndDrop.announcementForm.querySelector('#capacity');
 
   var checkRoomsValidity = function () {
     if (roomCapacitySelect.options.length > 0) {
@@ -24,8 +24,8 @@
     checkRoomsValidity();
   });
 
-  var timeInSelect = window.map.announcementForm.querySelector('#timein');
-  var timeOutSelect = window.map.announcementForm.querySelector('#timeout');
+  var timeInSelect = window.dragAndDrop.announcementForm.querySelector('#timein');
+  var timeOutSelect = window.dragAndDrop.announcementForm.querySelector('#timeout');
 
   timeInSelect.addEventListener('change', function () {
     timeOutSelect.value = timeInSelect.value;
@@ -35,8 +35,8 @@
     timeInSelect.value = timeOutSelect.value;
   });
 
-  var housingTypeSelect = window.map.announcementForm.querySelector('#type');
-  var housingPriceSelect = window.map.announcementForm.querySelector('#price');
+  var housingTypeSelect = window.dragAndDrop.announcementForm.querySelector('#type');
+  var housingPriceSelect = window.dragAndDrop.announcementForm.querySelector('#price');
 
   housingTypeSelect.addEventListener('change', function () {
     housingPriceSelect.placeholder = window.data.HOUSING_DATA[housingTypeSelect.value].price;

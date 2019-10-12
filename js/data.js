@@ -101,6 +101,10 @@
     HOUSING_DATA: HOUSING_DATA,
     FEATURES: FEATURES,
     PHOTOS: PHOTOS,
+    MAP_X_MIN: MAP_X_MIN,
+    MAP_Y_MIN: MAP_Y_MIN,
+    MAP_Y_MAX: MAP_Y_MAX,
+    mapXMax: mapXMax,
     createAnnouncement: createAnnouncement,
     pins: pins,
     map: map
