@@ -46,11 +46,11 @@
       }
 
       if (startCoordinates.y < mapMainPinDefaultY) {
-        mainPinStyleTop = mapMainPin.offsetTop - shift.y >= window.data.MAP_Y_MIN ? mapMainPin.offsetTop - shift.y : window.data.MAP_Y_MIN;
+        mainPinStyleTop = mapMainPin.offsetTop + mapMainPinActiveHeight - shift.y >= window.data.MAP_Y_MIN ? mapMainPin.offsetTop - shift.y : window.data.MAP_Y_MIN - mapMainPinActiveHeight;
       }
 
       if (startCoordinates.y > mapMainPinDefaultY) {
-        mainPinStyleTop = mapMainPin.offsetTop - shift.y <= window.data.MAP_Y_MAX ? mapMainPin.offsetTop - shift.y : window.data.MAP_Y_MAX;
+        mainPinStyleTop = mapMainPin.offsetTop + mapMainPinActiveHeight - shift.y <= window.data.MAP_Y_MAX ? mapMainPin.offsetTop - shift.y : window.data.MAP_Y_MAX - mapMainPinActiveHeight;
       }
 
       mapMainPin.style.top = mainPinStyleTop + 'px';
