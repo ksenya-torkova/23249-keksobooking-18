@@ -13,8 +13,8 @@
   mapMainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
-    announcementAddress.value = (parseInt(mapMainPin.style.left, 10) - mapMainPinWidth / 2).toFixed() +
-    ', ' + (parseInt(mapMainPin.style.top, 10) - mapMainPinActiveHeight / 2).toFixed();
+    announcementAddress.value = (parseInt(mapMainPin.style.left, 10) + mapMainPinWidth / 2).toFixed() +
+    ', ' + (parseInt(mapMainPin.style.top, 10) + mapMainPinActiveHeight).toFixed();
 
     var startCoordinates = {
       x: evt.clientX,
@@ -38,11 +38,11 @@
       };
 
       if (startCoordinates.x < mapMainPinDefaultX) {
-        mainPinStyleLeft = mapMainPin.offsetLeft - shift.x >= window.data.MAP_X_MIN ? mapMainPin.offsetLeft - shift.x : window.data.MAP_X_MIN;
+        mainPinStyleLeft = mapMainPin.offsetLeft + mapMainPinWidth / 2 - shift.x >= window.data.MAP_X_MIN ? mapMainPin.offsetLeft - shift.x : window.data.MAP_X_MIN - mapMainPinWidth / 2;
       }
 
       if (startCoordinates.x > mapMainPinDefaultX) {
-        mainPinStyleLeft = mapMainPin.offsetLeft + mapMainPinWidth - shift.x <= window.data.mapXMax ? mapMainPin.offsetLeft - shift.x : window.data.mapXMax - mapMainPinWidth;
+        mainPinStyleLeft = mapMainPin.offsetLeft + mapMainPinWidth / 2 - shift.x <= window.data.mapXMax ? mapMainPin.offsetLeft - shift.x : window.data.mapXMax - mapMainPinWidth / 2;
       }
 
       if (startCoordinates.y < mapMainPinDefaultY) {
@@ -60,8 +60,8 @@
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
-      announcementAddress.value = (parseInt(mapMainPin.style.left, 10) - mapMainPinWidth / 2).toFixed() +
-      ', ' + (parseInt(mapMainPin.style.top, 10) - mapMainPinActiveHeight / 2).toFixed();
+      announcementAddress.value = (parseInt(mapMainPin.style.left, 10) + mapMainPinWidth / 2).toFixed() +
+      ', ' + (parseInt(mapMainPin.style.top, 10) + mapMainPinActiveHeight).toFixed();
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
