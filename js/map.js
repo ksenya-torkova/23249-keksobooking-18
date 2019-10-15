@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var mapMainPinHeight = window.dragAndDrop.mapMainPin.offsetHeight;
   var filterForm = window.data.map.querySelector('.map__filters');
   var filterFormSection = filterForm.querySelector('fieldset');
   var filterFormSelects = filterForm.querySelector('select');
@@ -21,7 +20,7 @@
     }
 
     window.dragAndDrop.announcementAddress.value = (parseInt(window.dragAndDrop.mapMainPin.style.left, 10) - window.dragAndDrop.mapMainPinWidth / 2).toFixed() +
-     ', ' + (parseInt(window.dragAndDrop.mapMainPin.style.top, 10) - mapMainPinHeight / 2).toFixed();
+     ', ' + (parseInt(window.dragAndDrop.mapMainPin.style.top, 10) - window.dragAndDrop.pinSizes.INACTIVE_PIN_HEIGHT / 2).toFixed();
   };
 
   inactivateMap();
