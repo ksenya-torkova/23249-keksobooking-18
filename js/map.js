@@ -19,8 +19,7 @@
       announcementFormSections[j].disabled = 'disabled';
     }
 
-    window.dragAndDrop.announcementAddress.value = (parseInt(window.dragAndDrop.mapMainPin.style.left, 10) - window.dragAndDrop.mapMainPinWidth / 2).toFixed() +
-     ', ' + (parseInt(window.dragAndDrop.mapMainPin.style.top, 10) - window.dragAndDrop.pinSizes.INACTIVE_PIN_HEIGHT / 2).toFixed();
+    window.dragAndDrop.announcementAddress.value = window.dragAndDrop.getAnnouncementAddress(false);
   };
 
   inactivateMap();
