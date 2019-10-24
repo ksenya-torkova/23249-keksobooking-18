@@ -29,7 +29,8 @@
     window.dragAndDrop.announcementForm.classList.remove('ad-form--disabled');
     filterFormSection.disabled = '';
 
-    window.data.createAnnouncement();
+    // window.data.createAnnouncement();
+    window.data.request('get', 'https://js.dump.academy/keksobooking/data', window.data.createAnnouncement, window.data.onErrorLoad);
     window.pin.renderPins();
 
     for (var i = 0; i < filterFormSelects.length; i++) {

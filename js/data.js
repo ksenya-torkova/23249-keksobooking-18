@@ -66,32 +66,105 @@
   var map = document.querySelector('.map');
   var mapXMax = map.offsetWidth;
 
-  var createAnnouncement = function () {
-    for (var i = 0; i < PINS_AMOUNT; i++) {
+  var createAnnouncement = function (data) {
+    console.log(data[0]);
+    for (var i = 0; i < data.length; i++) {
       pins.push({
         author: {
-          avatar: 'img/avatars/user0' + (i + 1) + '.png'
+          avatar: data[i].author.avatar
         },
 
         offer: {
-          title: 'title',
-          address: window.utils.getRandomInteger(MAP_X_MIN, mapXMax) + ', ' + window.utils.getRandomInteger(MAP_Y_MIN, MAP_Y_MAX),
-          price: 0,
-          type: TYPES[window.utils.getRandomInteger(0, TYPES.length - 1)],
-          rooms: window.utils.getRandomInteger(1, 3),
-          guests: window.utils.getRandomInteger(0, 3),
-          checkin: CHECK_IN[window.utils.getRandomInteger(0, CHECK_IN.length - 1)],
-          checkout: CHECK_OUT[window.utils.getRandomInteger(0, CHECK_OUT.length - 1)],
-          features: window.utils.shuffleArray(FEATURES.slice(), window.utils.getRandomInteger(0, FEATURES.length)),
-          description: 'description',
-          photos: window.utils.shuffleArray(PHOTOS.slice(), window.utils.getRandomInteger(0, PHOTOS.length))
+          title: data[i].offer.title,
+          address: data[i].offer.address,
+          price: data[i].offer.price,
+          type: data[i].offer.type,
+          rooms: data[i].offer.rooms,
+          guests: data[i].offer.guests,
+          checkin: data[i].offer.checkin,
+          checkout: data[i].offer.checkout,
+          features: data[i].offer.features,
+          description: data[i].offer.description,
+          photos: data[i].offer.photos
         },
 
         location: {
-          x: window.utils.getRandomInteger(MAP_X_MIN, mapXMax),
-          y: window.utils.getRandomInteger(MAP_Y_MIN, MAP_Y_MAX)
+          x: data[i].location.x,
+          y: data[i].location.y
         }
       });
+    }
+  };
+
+  var SET_DATA_URL = 'https://js.dump.academy/code-and-magick';
+  var GET_DATA_URL = 'https://js.dump.academy/keksobooking/data';
+  var XHR_TIMEOUT = 10000;
+  var REQUEST_SUCCESS_CODE = 200;
+  var REQUEST_ERROR = 400;
+  var USER_REQUEST_ERROR = 401;
+  var DATA_REQUEST_ERROR = 404;
+
+  var onErrorLoad = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red; width: 100%';
+    node.style.position = 'fixed';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  var getRequestStatus = function (request) {
+    var error;
+
+    switch (request.status) {
+      case REQUEST_ERROR:
+        error = 'Неверный запрос';
+        break;
+      case USER_REQUEST_ERROR:
+        error = 'Пользователь не авторизован';
+        break;
+      case DATA_REQUEST_ERROR:
+        error = 'Ничего не найдено';
+        break;
+      default:
+        error = 'Cтатус ответа: ' + request.status + ' ' + request.statusText;
+    }
+
+    return error;
+  };
+
+  var request = function (method, url, onSuccess, onError, data) {
+    var xhr = new XMLHttpRequest();
+
+    xhr.responseType = 'json';
+
+    xhr.addEventListener('load', function () {
+      if (xhr.status === REQUEST_SUCCESS_CODE) {
+        onSuccess(xhr.response);
+      } else {
+        onError(getRequestStatus(xhr));
+      }
+    });
+
+    xhr.addEventListener('error', function () {
+      onError('Произошла ошибка соединения');
+    });
+
+    xhr.addEventListener('timeout', function () {
+      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+    });
+
+    xhr.timeout = XHR_TIMEOUT;
+
+    xhr.open(method, url);
+
+    if (data) {
+      xhr.send(data);
+    } else {
+      xhr.send();
     }
   };
 
@@ -106,6 +179,8 @@
     MAP_Y_MAX: MAP_Y_MAX,
     mapXMax: mapXMax,
     createAnnouncement: createAnnouncement,
+    request: request,
+    onErrorLoad: onErrorLoad,
     pins: pins,
     map: map
   };
