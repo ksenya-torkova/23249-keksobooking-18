@@ -4,6 +4,8 @@
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
 
+  window.data.request(window.data.createAnnouncement, window.data.onErrorLoad);
+
   var getFeaturesList = function (list, items) {
     var listClass = list.className;
     var listItemTemplate = cardTemplate.querySelector('.' + listClass + ' li');
@@ -60,6 +62,8 @@
     return cardMarkup;
   };
 
+  var pinFragment = document.createDocumentFragment();
+  var pinsBlock = window.data.map.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content;
   var pinTemplateItem = pinTemplate.querySelector('.map__pin');
 
@@ -85,8 +89,16 @@
     return pinMarkup;
   };
 
+  var renderPins = function (announcementItems) {
+    for (var i = 0; i < announcementItems.length; i++) {
+      pinFragment.appendChild(getTemplateOfPin(announcementItems[i]));
+    }
+
+    pinsBlock.appendChild(pinFragment);
+  };
+
   window.template = {
     getTemplateOfCard: getTemplateOfCard,
-    getTemplateOfPin: getTemplateOfPin
+    renderPins: renderPins
   };
 })();
