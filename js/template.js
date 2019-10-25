@@ -4,7 +4,7 @@
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
 
-  window.data.request(window.data.createAnnouncement, window.data.onErrorLoad);
+  window.backend.request(window.data.createAnnouncement, window.backend.onErrorLoad);
 
   var getFeaturesList = function (list, items) {
     var listClass = list.className;

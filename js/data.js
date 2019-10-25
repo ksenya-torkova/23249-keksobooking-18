@@ -61,49 +61,6 @@
     }
   };
 
-  var GET_DATA_URL = 'https://js.dump.academy/keksobooking/data';
-  var XHR_TIMEOUT = 10000;
-  var REQUEST_SUCCESS_CODE = 200;
-
-  var onErrorLoad = function (errorMessage) {
-    var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red; width: 100%';
-    node.style.position = 'fixed';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '30px';
-
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement('afterbegin', node);
-  };
-
-  var request = function (onSuccess, onError) {
-    var xhr = new XMLHttpRequest();
-
-    xhr.responseType = 'json';
-    xhr.timeout = XHR_TIMEOUT;
-
-    xhr.addEventListener('load', function () {
-      if (xhr.status === REQUEST_SUCCESS_CODE) {
-        onSuccess(xhr.response);
-      } else {
-        console.log('error 1');
-        onError();
-      }
-    });
-
-    xhr.addEventListener('error', function () {
-      console.log('error 2');
-    });
-
-    xhr.addEventListener('timeout', function () {
-      console.log('error 3');
-    });
-
-    xhr.open('get', GET_DATA_URL);
-    xhr.send();
-  };
-
   window.data = {
     PINS_AMOUNT: PINS_AMOUNT,
     HOUSING_DATA: HOUSING_DATA,
@@ -112,8 +69,6 @@
     MAP_Y_MAX: MAP_Y_MAX,
     mapXMax: mapXMax,
     createAnnouncement: createAnnouncement,
-    request: request,
-    onErrorLoad: onErrorLoad,
     pins: pins,
     map: map
   };
