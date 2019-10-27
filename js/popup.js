@@ -11,7 +11,7 @@
     }
   };
 
-  var pinActivate = function (announcementItem, pin) {
+  var activate = function (announcementItem, pin) {
     pinInactivate();
 
     pin.classList.add('map__pin--active');
@@ -52,7 +52,8 @@
   };
 
   window.popup = {
-    pinActivate: pinActivate,
+    activate: activate,
+    popupHide: popupHide,
     map: map
   };
 })();

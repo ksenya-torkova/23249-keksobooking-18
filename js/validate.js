@@ -42,4 +42,29 @@
     housingPriceSelect.placeholder = window.data.HOUSING_DATA[housingTypeSelect.value].price;
     housingPriceSelect.min = window.utils.HOUSING_DATA[housingTypeSelect.value].price;
   });
+
+  var onSuccessLoad = function () {
+    var successTemplate = document.querySelector('#success').content;
+    var successBlock = successTemplate.querySelector('.success');
+
+    successBlock.addEventListener('click', function () {
+      successBlock.classList.add('success--hidden');
+    });
+
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.utils.ESC_KEYCODE) {
+        successBlock.classList.add('success--hidden');
+      }
+    });
+
+    window.backend.pageMain.insertAdjacentElement('afterbegin', successBlock);
+
+    window.dragAndDrop.announcementForm.reset();
+    window.map.inactivate();
+  };
+
+  window.dragAndDrop.announcementForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.request('post', window.backend.SET_DATA_URL, onSuccessLoad, window.backend.onErrorLoad, new FormData(window.dragAndDrop.announcementForm));
+  });
 })();
