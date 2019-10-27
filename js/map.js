@@ -1,13 +1,13 @@
 'use strict';
 
 (function () {
-  var filterForm = window.data.map.querySelector('.map__filters');
+  var filterForm = window.popup.map.querySelector('.map__filters');
   var filterFormSection = filterForm.querySelector('fieldset');
   var filterFormSelects = filterForm.querySelector('select');
   var announcementFormSections = window.dragAndDrop.announcementForm.querySelectorAll('fieldset');
 
   var inactivateMap = function () {
-    window.data.map.classList.add('map--faded');
+    window.popup.map.classList.add('map--faded');
     window.dragAndDrop.announcementForm.classList.add('ad-form--disabled');
     filterFormSection.disabled = 'disabled';
 
@@ -25,11 +25,11 @@
   inactivateMap();
 
   var activateMap = function () {
-    window.data.map.classList.remove('map--faded');
+    window.popup.map.classList.remove('map--faded');
     window.dragAndDrop.announcementForm.classList.remove('ad-form--disabled');
     filterFormSection.disabled = '';
 
-    window.template.renderPins(window.data.pins);
+    window.backend.request(window.template.renderPins, window.backend.onErrorLoad);
 
     for (var i = 0; i < filterFormSelects.length; i++) {
       filterFormSelects[i].disabled = '';

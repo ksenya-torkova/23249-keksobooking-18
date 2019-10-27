@@ -40,6 +40,6 @@
 
   housingTypeSelect.addEventListener('change', function () {
     housingPriceSelect.placeholder = window.data.HOUSING_DATA[housingTypeSelect.value].price;
-    housingPriceSelect.min = window.data.HOUSING_DATA[housingTypeSelect.value].price;
+    housingPriceSelect.min = window.utils.HOUSING_DATA[housingTypeSelect.value].price;
   });
 })();
