@@ -3,6 +3,7 @@
 (function () {
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
+  var PIN_MAX_AMOUNT = 5;
 
   var getFeaturesList = function (list, items) {
     var listClass = list.className;
@@ -44,7 +45,7 @@
     cardMarkup.querySelector('.popup__title').textContent = announcementItem.offer.title;
     cardMarkup.querySelector('.popup__text--address').textContent = announcementItem.offer.address;
     cardMarkup.querySelector('.popup__text--price').textContent = announcementItem.offer.price + '₽/ночь';
-    cardMarkup.querySelector('.popup__type').textContent = window.data.HOUSING_DATA[announcementItem.offer.type].ru;
+    cardMarkup.querySelector('.popup__type').textContent = window.utils.HOUSING_DATA[announcementItem.offer.type].ru;
     cardMarkup.querySelector('.popup__text--capacity').textContent =
       announcementItem.offer.rooms + ' ' + window.utils.numDecline(announcementItem.offer.rooms, 'комната', 'комнаты', 'комнат') + ' для ' +
       announcementItem.offer.guests + ' ' + window.utils.numDecline(announcementItem.offer.guests, 'гостя', 'гостей', 'гостей');
@@ -60,6 +61,8 @@
     return cardMarkup;
   };
 
+  var pinFragment = document.createDocumentFragment();
+  var pinsBlock = window.popup.map.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content;
   var pinTemplateItem = pinTemplate.querySelector('.map__pin');
 
@@ -85,8 +88,16 @@
     return pinMarkup;
   };
 
+  var renderPins = function (announcementItems) {
+    for (var i = 0; i < PIN_MAX_AMOUNT; i++) {
+      pinFragment.appendChild(getTemplateOfPin(announcementItems[i]));
+    }
+
+    pinsBlock.appendChild(pinFragment);
+  };
+
   window.template = {
     getTemplateOfCard: getTemplateOfCard,
-    getTemplateOfPin: getTemplateOfPin
+    renderPins: renderPins
   };
 })();

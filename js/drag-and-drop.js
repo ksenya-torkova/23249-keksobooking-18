@@ -1,6 +1,10 @@
 'use strict';
 
 (function () {
+  var MAP_X_MIN = 0;
+  var MAP_Y_MIN = 130;
+  var MAP_Y_MAX = 630;
+
   var pinSizes = {
     INACTIVE_PIN_WIDTH: 156,
     INACTIVE_PIN_HEIGHT: 156,
@@ -8,14 +12,16 @@
     ACTIVE_PIN_HEIGHT: 77
   };
 
+  var mapXMax = window.popup.map.offsetWidth;
+
   var MAIN_PIN_LIMITS = {
-    xMin: window.data.MAP_X_MIN - pinSizes.ACTIVE_PIN_WIDTH / 2,
-    xMax: window.data.mapXMax - pinSizes.ACTIVE_PIN_WIDTH / 2,
-    yMin: window.data.MAP_Y_MIN - pinSizes.ACTIVE_PIN_HEIGHT,
-    yMax: window.data.MAP_Y_MAX - pinSizes.ACTIVE_PIN_HEIGHT
+    xMin: MAP_X_MIN - pinSizes.ACTIVE_PIN_WIDTH / 2,
+    xMax: mapXMax - pinSizes.ACTIVE_PIN_WIDTH / 2,
+    yMin: MAP_Y_MIN - pinSizes.ACTIVE_PIN_HEIGHT,
+    yMax: MAP_Y_MAX - pinSizes.ACTIVE_PIN_HEIGHT
   };
 
-  var mapMainPin = window.data.map.querySelector('.map__pin--main');
+  var mapMainPin = window.popup.map.querySelector('.map__pin--main');
   var announcementForm = document.querySelector('.ad-form');
   var announcementAddress = announcementForm.querySelector('#address');
 
