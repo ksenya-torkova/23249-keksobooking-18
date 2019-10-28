@@ -1193,6 +1193,11 @@ fieldset {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
+.success--hidden,
+.error--hidden {
+  display: none;
+}
+
 .success__message,
 .error__message {
   position: relative;

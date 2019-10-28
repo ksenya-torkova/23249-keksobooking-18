@@ -5,8 +5,12 @@
   var filterFormSection = filterForm.querySelector('fieldset');
   var filterFormSelects = filterForm.querySelector('select');
   var announcementFormSections = window.dragAndDrop.announcementForm.querySelectorAll('fieldset');
+  var mainPinStartCoords = {
+    x: window.dragAndDrop.mapMainPin.offsetLeft,
+    y: window.dragAndDrop.mapMainPin.offsetTop
+  };
 
-  var inactivateMap = function () {
+  var inactivate = function () {
     window.popup.map.classList.add('map--faded');
     window.dragAndDrop.announcementForm.classList.add('ad-form--disabled');
     filterFormSection.disabled = 'disabled';
@@ -19,17 +23,30 @@
       announcementFormSections[j].disabled = 'disabled';
     }
 
+    window.dragAndDrop.mapMainPin.style.left = mainPinStartCoords.x + 'px';
+    window.dragAndDrop.mapMainPin.style.top = mainPinStartCoords.y + 'px';
+
     window.dragAndDrop.announcementAddress.value = window.dragAndDrop.getAnnouncementAddress(false);
+
+    window.template.clearPins();
+
+    window.dragAndDrop.mapMainPin.addEventListener('mousedown', activate);
+
+    var popup = window.popup.map.querySelector('.popup');
+
+    if (popup) {
+      popup.remove();
+    }
   };
 
-  inactivateMap();
+  inactivate();
 
-  var activateMap = function () {
+  var activate = function () {
     window.popup.map.classList.remove('map--faded');
     window.dragAndDrop.announcementForm.classList.remove('ad-form--disabled');
     filterFormSection.disabled = '';
 
-    window.backend.request(window.template.renderPins, window.backend.onErrorLoad);
+    window.backend.request('get', window.backend.GET_DATA_URL, window.template.renderPins, window.backend.onErrorLoad);
 
     for (var i = 0; i < filterFormSelects.length; i++) {
       filterFormSelects[i].disabled = '';
@@ -39,14 +56,18 @@
       announcementFormSections[j].disabled = '';
     }
 
-    window.dragAndDrop.mapMainPin.removeEventListener('mousedown', activateMap);
+    window.dragAndDrop.mapMainPin.removeEventListener('mousedown', activate);
   };
 
-  window.dragAndDrop.mapMainPin.addEventListener('mousedown', activateMap);
+  window.dragAndDrop.mapMainPin.addEventListener('mousedown', activate);
 
   window.dragAndDrop.mapMainPin.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.utils.ENTER_KEYCODE) {
-      activateMap();
+      activate();
     }
   });
+
+  window.map = {
+    inactivate: inactivate
+  };
 })();

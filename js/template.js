@@ -76,12 +76,12 @@
     pinMarkup.tabIndex = '0';
 
     pinMarkup.addEventListener('click', function () {
-      window.popup.pinActivate(announcementItem, pinMarkup);
+      window.popup.activate(announcementItem, pinMarkup);
     });
 
     pinMarkup.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.utils.ENTER_KEYCODE) {
-        window.popup.pinActivate(announcementItem, pinMarkup);
+        window.popup.activate(announcementItem, pinMarkup);
       }
     });
 
@@ -96,8 +96,17 @@
     pinsBlock.appendChild(pinFragment);
   };
 
+  var clearPins = function () {
+    var pins = pinsBlock.querySelectorAll('.map__pin:not(.map__pin--main)');
+
+    pins.forEach(function (pin) {
+      pin.remove();
+    });
+  };
+
   window.template = {
     getTemplateOfCard: getTemplateOfCard,
-    renderPins: renderPins
+    renderPins: renderPins,
+    clearPins: clearPins
   };
 })();
