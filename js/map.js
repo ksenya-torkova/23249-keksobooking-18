@@ -29,14 +29,10 @@
     window.dragAndDrop.announcementAddress.value = window.dragAndDrop.getAnnouncementAddress(false);
 
     window.template.clearPins();
+    window.popup.hide();
+    window.filtration.mapFilters.reset();
 
     window.dragAndDrop.mapMainPin.addEventListener('mousedown', activate);
-
-    var popup = window.popup.map.querySelector('.popup');
-
-    if (popup) {
-      popup.remove();
-    }
   };
 
   inactivate();
@@ -46,7 +42,7 @@
     window.dragAndDrop.announcementForm.classList.remove('ad-form--disabled');
     filterFormSection.disabled = '';
 
-    window.backend.request('get', window.backend.GET_DATA_URL, window.template.renderPins, window.backend.onErrorLoad);
+    window.backend.request('get', window.backend.GET_DATA_URL, window.filtration.onSuccessPinsLoad, window.backend.onErrorLoad);
 
     for (var i = 0; i < filterFormSelects.length; i++) {
       filterFormSelects[i].disabled = '';
