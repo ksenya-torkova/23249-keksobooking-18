@@ -89,7 +89,9 @@
   };
 
   var renderPins = function (announcementItems) {
-    for (var i = 0; i < PIN_MAX_AMOUNT; i++) {
+    window.map.pinsData = announcementItems;
+
+    for (var i = 0; i < announcementItems.length && i < PIN_MAX_AMOUNT; i++) {
       pinFragment.appendChild(getTemplateOfPin(announcementItems[i]));
     }
 

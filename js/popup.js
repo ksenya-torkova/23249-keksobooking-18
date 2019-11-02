@@ -18,8 +18,22 @@
     getAppropriateAnnouncement(announcementItem);
   };
 
-  var popupHide = function (popup) {
-    popup.classList.add('popup--hidden');
+  var hide = function () {
+    var currentPopup = map.querySelector('.popup');
+
+    if (currentPopup) {
+      currentPopup.classList.add('popup--hidden');
+    }
+  };
+
+  var popupClose = function () {
+    var currentPopup = map.querySelector('.popup');
+    var mapPopupClose = currentPopup.querySelector('.popup__close');
+
+    mapPopupClose.addEventListener('click', function () {
+      hide();
+      pinInactivate();
+    });
   };
 
   var cardFragment = document.createDocumentFragment();
@@ -35,17 +49,11 @@
       map.replaceChild(cardFragment, currentMapPopup);
     }
 
-    var mapPopup = map.querySelector('.popup');
-    var mapPopupClose = mapPopup.querySelector('.popup__close');
-
-    mapPopupClose.addEventListener('click', function () {
-      popupHide(mapPopup);
-      pinInactivate();
-    });
+    popupClose();
 
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.utils.ESC_KEYCODE) {
-        popupHide(mapPopup);
+        hide();
         pinInactivate();
       }
     });
@@ -53,7 +61,7 @@
 
   window.popup = {
     activate: activate,
-    popupHide: popupHide,
+    hide: hide,
     map: map
   };
 })();
