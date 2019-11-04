@@ -58,7 +58,7 @@
   window.dragAndDrop.mapMainPin.addEventListener('mousedown', activate);
 
   window.dragAndDrop.mapMainPin.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.utils.ENTER_KEYCODE) {
+    if (evt.keyCode === window.util.ENTER_KEYCODE) {
       activate();
     }
   });

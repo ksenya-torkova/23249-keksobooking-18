@@ -45,10 +45,10 @@
     cardMarkup.querySelector('.popup__title').textContent = announcementItem.offer.title;
     cardMarkup.querySelector('.popup__text--address').textContent = announcementItem.offer.address;
     cardMarkup.querySelector('.popup__text--price').textContent = announcementItem.offer.price + '₽/ночь';
-    cardMarkup.querySelector('.popup__type').textContent = window.utils.HOUSING_DATA[announcementItem.offer.type].ru;
+    cardMarkup.querySelector('.popup__type').textContent = window.util.HOUSING_DATA[announcementItem.offer.type].ru;
     cardMarkup.querySelector('.popup__text--capacity').textContent =
-      announcementItem.offer.rooms + ' ' + window.utils.numDecline(announcementItem.offer.rooms, 'комната', 'комнаты', 'комнат') + ' для ' +
-      announcementItem.offer.guests + ' ' + window.utils.numDecline(announcementItem.offer.guests, 'гостя', 'гостей', 'гостей');
+      announcementItem.offer.rooms + ' ' + window.util.numDecline(announcementItem.offer.rooms, 'комната', 'комнаты', 'комнат') + ' для ' +
+      announcementItem.offer.guests + ' ' + window.util.numDecline(announcementItem.offer.guests, 'гостя', 'гостей', 'гостей');
     cardMarkup.querySelector('.popup__text--time').textContent = 'Заезд после ' + announcementItem.offer.checkin + ' выезд до ' + announcementItem.offer.checkout;
     cardMarkup.querySelector('.popup__description').textContent = announcementItem.offer.description;
 
@@ -80,7 +80,7 @@
     });
 
     pinMarkup.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.utils.ENTER_KEYCODE) {
+      if (evt.keyCode === window.util.ENTER_KEYCODE) {
         window.popup.activate(announcementItem, pinMarkup);
       }
     });

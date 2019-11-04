@@ -30,7 +30,9 @@
       mapMainPin.style.left = MAIN_PIN_LIMITS.xMin + 'px';
     } else if (mapMainPin.offsetLeft > MAIN_PIN_LIMITS.xMax) {
       mapMainPin.style.left = MAIN_PIN_LIMITS.xMax + 'px';
-    } else if (mapMainPin.offsetTop < MAIN_PIN_LIMITS.yMin) {
+    }
+
+    if (mapMainPin.offsetTop < MAIN_PIN_LIMITS.yMin) {
       mapMainPin.style.top = MAIN_PIN_LIMITS.yMin + 'px';
     } else if (mapMainPin.offsetTop > MAIN_PIN_LIMITS.yMax) {
       mapMainPin.style.top = MAIN_PIN_LIMITS.yMax + 'px';

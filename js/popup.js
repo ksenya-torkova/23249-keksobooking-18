@@ -52,7 +52,7 @@
     popupClose();
 
     document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.utils.ESC_KEYCODE) {
+      if (evt.keyCode === window.util.ESC_KEYCODE) {
         hide();
         pinInactivate();
       }

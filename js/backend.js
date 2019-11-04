@@ -20,7 +20,7 @@
     });
 
     document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.utils.ESC_KEYCODE) {
+      if (evt.keyCode === window.util.ESC_KEYCODE) {
         errorBlock.classList.add('error--hidden');
       }
     });
