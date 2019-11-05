@@ -3,57 +3,37 @@
 (function () {
   var pinsData = [];
 
-  // var housingSelect = mapFilters.querySelector('#housing-type');
-  // var defaultHousingSelectValue = housingSelect.value;
-  //
-  // var updatePins = function () {
-  //   var filtratedPins = pinsData.filter(function (it) {
-  //     return it.offer.type === housingSelect.value;
-  //   });
-  //
-  //   window.template.renderPins(filtratedPins);
-  // };
-  //
   var onSuccessPinsLoad = function (data) {
     pinsData = data;
     window.template.renderPins(pinsData);
   };
-  //
-  // housingSelect.addEventListener('change', function () {
-  //   window.template.clearPins();
-  //   window.popup.hide();
-  //
-  //   if (housingSelect.value === defaultHousingSelectValue) {
-  //     window.template.renderPins(pinsData);
-  //   }
-  //
-  //   updatePins();
-  // });
 
   var mapFilters = window.popup.map.querySelector('.map__filters');
 
-  var priceMap = {
+  var priceValues = {
     'low': {
       start: 0,
       end: 1000
     },
+
     'middle': {
       start: 10000,
       end: 50000
     },
+
     'high': {
       start: 50000,
       end: Infinity
     }
   };
 
-  var filterRules = {
+  var filterTypes = {
     'housing-type': function (data, filter) {
       return data.offer.type === filter.value;
     },
 
     'housing-price': function (data, filter) {
-      return data.offer.price >= priceMap[filter.value].start && data.offer.price < priceMap[filter.value].end;
+      return data.offer.price >= priceValues[filter.value].start && data.offer.price < priceValues[filter.value].end;
     },
 
     'housing-rooms': function (data, filter) {
@@ -78,7 +58,7 @@
   var getFilterData = function (data, elements) {
     return data.filter(function (item) {
       return elements.every(function (filter) {
-        return (filter.value === 'any') ? true : filterRules[filter.id](item, filter);
+        return (filter.value === 'any') ? true : filterTypes[filter.id](item, filter);
       });
     });
   };

@@ -1,9 +1,11 @@
 'use strict';
 
 (function () {
-  var PIN_WIDTH = 50;
-  var PIN_HEIGHT = 70;
-  var PIN_MAX_AMOUNT = 5;
+  var PinSettings = {
+    PIN_WIDTH: 50,
+    PIN_HEIGHT: 70,
+    PIN_MAX_AMOUNT: 5
+  };
 
   var getFeaturesList = function (list, items) {
     var listClass = list.className;
@@ -71,8 +73,8 @@
 
     pinMarkup.querySelector('img').src = announcementItem.author.avatar;
     pinMarkup.querySelector('img').alt = announcementItem.offer.title;
-    pinMarkup.style.left = (announcementItem.location.x - PIN_WIDTH / 2) + 'px';
-    pinMarkup.style.top = (announcementItem.location.y - PIN_HEIGHT) + 'px';
+    pinMarkup.style.left = (announcementItem.location.x - PinSettings.PIN_WIDTH / 2) + 'px';
+    pinMarkup.style.top = (announcementItem.location.y - PinSettings.PIN_HEIGHT) + 'px';
     pinMarkup.tabIndex = '0';
 
     pinMarkup.addEventListener('click', function () {
@@ -91,7 +93,7 @@
   var renderPins = function (announcementItems) {
     window.map.pinsData = announcementItems;
 
-    for (var i = 0; i < announcementItems.length && i < PIN_MAX_AMOUNT; i++) {
+    for (var i = 0; i < announcementItems.length && i < PinSettings.PIN_MAX_AMOUNT; i++) {
       pinFragment.appendChild(getTemplateOfPin(announcementItems[i]));
     }
 

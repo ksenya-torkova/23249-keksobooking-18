@@ -1,11 +1,13 @@
 'use strict';
 
 (function () {
-  var MAP_X_MIN = 0;
-  var MAP_Y_MIN = 130;
-  var MAP_Y_MAX = 630;
+  var MapSizes = {
+    MAP_X_MIN: 0,
+    MAP_Y_MIN: 130,
+    MAP_Y_MAX: 630
+  };
 
-  var pinSizes = {
+  var PinSizes = {
     INACTIVE_PIN_WIDTH: 156,
     INACTIVE_PIN_HEIGHT: 156,
     ACTIVE_PIN_WIDTH: 65,
@@ -14,11 +16,11 @@
 
   var mapXMax = window.popup.map.offsetWidth;
 
-  var MAIN_PIN_LIMITS = {
-    xMin: MAP_X_MIN - pinSizes.ACTIVE_PIN_WIDTH / 2,
-    xMax: mapXMax - pinSizes.ACTIVE_PIN_WIDTH / 2,
-    yMin: MAP_Y_MIN - pinSizes.ACTIVE_PIN_HEIGHT,
-    yMax: MAP_Y_MAX - pinSizes.ACTIVE_PIN_HEIGHT
+  var mainPinLimits = {
+    xMin: MapSizes.MAP_X_MIN - PinSizes.ACTIVE_PIN_WIDTH / 2,
+    xMax: mapXMax - PinSizes.ACTIVE_PIN_WIDTH / 2,
+    yMin: MapSizes.MAP_Y_MIN - PinSizes.ACTIVE_PIN_HEIGHT,
+    yMax: MapSizes.MAP_Y_MAX - PinSizes.ACTIVE_PIN_HEIGHT
   };
 
   var mapMainPin = window.popup.map.querySelector('.map__pin--main');
@@ -26,22 +28,22 @@
   var announcementAddress = announcementForm.querySelector('#address');
 
   var limitMainPinCoordinates = function () {
-    if (mapMainPin.offsetLeft < MAIN_PIN_LIMITS.xMin) {
-      mapMainPin.style.left = MAIN_PIN_LIMITS.xMin + 'px';
-    } else if (mapMainPin.offsetLeft > MAIN_PIN_LIMITS.xMax) {
-      mapMainPin.style.left = MAIN_PIN_LIMITS.xMax + 'px';
+    if (mapMainPin.offsetLeft < mainPinLimits.xMin) {
+      mapMainPin.style.left = mainPinLimits.xMin + 'px';
+    } else if (mapMainPin.offsetLeft > mainPinLimits.xMax) {
+      mapMainPin.style.left = mainPinLimits.xMax + 'px';
     }
 
-    if (mapMainPin.offsetTop < MAIN_PIN_LIMITS.yMin) {
-      mapMainPin.style.top = MAIN_PIN_LIMITS.yMin + 'px';
-    } else if (mapMainPin.offsetTop > MAIN_PIN_LIMITS.yMax) {
-      mapMainPin.style.top = MAIN_PIN_LIMITS.yMax + 'px';
+    if (mapMainPin.offsetTop < mainPinLimits.yMin) {
+      mapMainPin.style.top = mainPinLimits.yMin + 'px';
+    } else if (mapMainPin.offsetTop > mainPinLimits.yMax) {
+      mapMainPin.style.top = mainPinLimits.yMax + 'px';
     }
   };
 
   var getAnnouncementAddress = function (isMapActive) {
-    var currentPinWidth = isMapActive ? pinSizes.ACTIVE_PIN_WIDTH : pinSizes.INACTIVE_PIN_WIDTH;
-    var currentPinHeigth = isMapActive ? pinSizes.ACTIVE_PIN_HEIGHT : pinSizes.INACTIVE_PIN_HEIGHT;
+    var currentPinWidth = isMapActive ? PinSizes.ACTIVE_PIN_WIDTH : PinSizes.INACTIVE_PIN_WIDTH;
+    var currentPinHeigth = isMapActive ? PinSizes.ACTIVE_PIN_HEIGHT : PinSizes.INACTIVE_PIN_HEIGHT;
 
     return (parseInt(mapMainPin.style.left, 10) + currentPinWidth / 2).toFixed() +
     ', ' + (parseInt(mapMainPin.style.top, 10) + currentPinHeigth).toFixed();
@@ -90,7 +92,7 @@
   });
 
   window.dragAndDrop = {
-    pinSizes: pinSizes,
+    pinSizes: PinSizes,
     mapMainPin: mapMainPin,
     announcementForm: announcementForm,
     announcementAddress: announcementAddress,

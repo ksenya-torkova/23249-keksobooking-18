@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  var ENTER_KEYCODE = 13;
-  var ESC_KEYCODE = 27;
   var DEBOUNCE_INTERVAL = 500;
 
   var HOUSING_DATA = {
@@ -25,6 +23,11 @@
       ru: 'Дворец',
       price: 10000
     }
+  };
+
+  var KeyCodes = {
+    ENTER: 13,
+    ESC: 27
   };
 
   var numDecline = function (num, nominative, genetiveSingular, genetivePlural) {
@@ -59,8 +62,8 @@
   };
 
   window.util = {
-    ENTER_KEYCODE: ENTER_KEYCODE,
-    ESC_KEYCODE: ESC_KEYCODE,
+    ENTER_KEYCODE: KeyCodes.ENTER,
+    ESC_KEYCODE: KeyCodes.ESC,
     HOUSING_DATA: HOUSING_DATA,
     numDecline: numDecline,
     debounce: debounce

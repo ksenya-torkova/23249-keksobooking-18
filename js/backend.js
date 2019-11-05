@@ -1,13 +1,19 @@
 'use strict';
 
 (function () {
-  var GET_DATA_URL = 'https://js.dump.academy/keksobooking/data';
-  var SET_DATA_URL = 'https://js.dump.academy/keksobooking';
   var XHR_TIMEOUT = 10000;
-  var REQUEST_SUCCESS_CODE = 200;
-  var REQUEST_ERROR = 400;
-  var USER_REQUEST_ERROR = 401;
-  var DATA_REQUEST_ERROR = 404;
+
+  var Urls = {
+    GET_DATA: 'https://js.dump.academy/keksobooking/data',
+    SET_DATA: 'https://js.dump.academy/keksobooking'
+  };
+
+  var RequestCodes = {
+    SUCCESS: 200,
+    ERROR: 400,
+    USER_ERROR: 401,
+    DATA_ERROR: 404
+  };
 
   var pageMain = document.querySelector('.page-main');
 
@@ -35,13 +41,13 @@
     var error;
 
     switch (request.status) {
-      case REQUEST_ERROR:
+      case RequestCodes.ERROR:
         error = 'Неверный запрос';
         break;
-      case USER_REQUEST_ERROR:
+      case RequestCodes.USER_ERROR:
         error = 'Пользователь не авторизован';
         break;
-      case DATA_REQUEST_ERROR:
+      case RequestCodes.DATA_ERROR:
         error = 'Ничего не найдено';
         break;
       default:
@@ -58,7 +64,7 @@
     xhr.timeout = XHR_TIMEOUT;
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === REQUEST_SUCCESS_CODE) {
+      if (xhr.status === RequestCodes.SUCCESS) {
         onSuccess(xhr.response);
       } else {
         onError(getRequestStatus(xhr));
@@ -83,8 +89,8 @@
   };
 
   window.backend = {
-    GET_DATA_URL: GET_DATA_URL,
-    SET_DATA_URL: SET_DATA_URL,
+    GET_DATA_URL: Urls.GET_DATA,
+    SET_DATA_URL: Urls.SET_DATA,
     pageMain: pageMain,
     request: request,
     onErrorLoad: onErrorLoad
