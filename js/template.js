@@ -1,9 +1,11 @@
 'use strict';
 
 (function () {
-  var PIN_WIDTH = 50;
-  var PIN_HEIGHT = 70;
-  var PIN_MAX_AMOUNT = 5;
+  var PinSettings = {
+    PIN_WIDTH: 50,
+    PIN_HEIGHT: 70,
+    PIN_MAX_AMOUNT: 5
+  };
 
   var getFeaturesList = function (list, items) {
     var listClass = list.className;
@@ -45,10 +47,10 @@
     cardMarkup.querySelector('.popup__title').textContent = announcementItem.offer.title;
     cardMarkup.querySelector('.popup__text--address').textContent = announcementItem.offer.address;
     cardMarkup.querySelector('.popup__text--price').textContent = announcementItem.offer.price + '₽/ночь';
-    cardMarkup.querySelector('.popup__type').textContent = window.utils.HOUSING_DATA[announcementItem.offer.type].ru;
+    cardMarkup.querySelector('.popup__type').textContent = window.util.HOUSING_DATA[announcementItem.offer.type].ru;
     cardMarkup.querySelector('.popup__text--capacity').textContent =
-      announcementItem.offer.rooms + ' ' + window.utils.numDecline(announcementItem.offer.rooms, 'комната', 'комнаты', 'комнат') + ' для ' +
-      announcementItem.offer.guests + ' ' + window.utils.numDecline(announcementItem.offer.guests, 'гостя', 'гостей', 'гостей');
+      announcementItem.offer.rooms + ' ' + window.util.numDecline(announcementItem.offer.rooms, 'комната', 'комнаты', 'комнат') + ' для ' +
+      announcementItem.offer.guests + ' ' + window.util.numDecline(announcementItem.offer.guests, 'гостя', 'гостей', 'гостей');
     cardMarkup.querySelector('.popup__text--time').textContent = 'Заезд после ' + announcementItem.offer.checkin + ' выезд до ' + announcementItem.offer.checkout;
     cardMarkup.querySelector('.popup__description').textContent = announcementItem.offer.description;
 
@@ -71,8 +73,8 @@
 
     pinMarkup.querySelector('img').src = announcementItem.author.avatar;
     pinMarkup.querySelector('img').alt = announcementItem.offer.title;
-    pinMarkup.style.left = (announcementItem.location.x - PIN_WIDTH / 2) + 'px';
-    pinMarkup.style.top = (announcementItem.location.y - PIN_HEIGHT) + 'px';
+    pinMarkup.style.left = (announcementItem.location.x - PinSettings.PIN_WIDTH / 2) + 'px';
+    pinMarkup.style.top = (announcementItem.location.y - PinSettings.PIN_HEIGHT) + 'px';
     pinMarkup.tabIndex = '0';
 
     pinMarkup.addEventListener('click', function () {
@@ -80,7 +82,7 @@
     });
 
     pinMarkup.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.utils.ENTER_KEYCODE) {
+      if (evt.keyCode === window.util.ENTER_KEYCODE) {
         window.popup.activate(announcementItem, pinMarkup);
       }
     });
@@ -91,7 +93,7 @@
   var renderPins = function (announcementItems) {
     window.map.pinsData = announcementItems;
 
-    for (var i = 0; i < announcementItems.length && i < PIN_MAX_AMOUNT; i++) {
+    for (var i = 0; i < announcementItems.length && i < PinSettings.PIN_MAX_AMOUNT; i++) {
       pinFragment.appendChild(getTemplateOfPin(announcementItems[i]));
     }
 

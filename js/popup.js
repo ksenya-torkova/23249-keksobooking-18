@@ -3,7 +3,7 @@
 (function () {
   var map = document.querySelector('.map');
 
-  var pinInactivate = function () {
+  var inactivatePin = function () {
     var pinActive = map.querySelector('.map__pin--active');
 
     if (pinActive) {
@@ -11,14 +11,14 @@
     }
   };
 
-  var activate = function (announcementItem, pin) {
-    pinInactivate();
+  var activatePin = function (announcementItem, pin) {
+    inactivatePin();
 
     pin.classList.add('map__pin--active');
     getAppropriateAnnouncement(announcementItem);
   };
 
-  var hide = function () {
+  var hidePopup = function () {
     var currentPopup = map.querySelector('.popup');
 
     if (currentPopup) {
@@ -31,8 +31,8 @@
     var mapPopupClose = currentPopup.querySelector('.popup__close');
 
     mapPopupClose.addEventListener('click', function () {
-      hide();
-      pinInactivate();
+      hidePopup();
+      inactivatePin();
     });
   };
 
@@ -52,16 +52,16 @@
     popupClose();
 
     document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.utils.ESC_KEYCODE) {
-        hide();
-        pinInactivate();
+      if (evt.keyCode === window.util.ESC_KEYCODE) {
+        hidePopup();
+        inactivatePin();
       }
     });
   };
 
   window.popup = {
-    activate: activate,
-    hide: hide,
+    activate: activatePin,
+    hide: hidePopup,
     map: map
   };
 })();

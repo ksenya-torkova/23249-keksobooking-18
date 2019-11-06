@@ -5,12 +5,13 @@
   var filterFormSection = filterForm.querySelector('fieldset');
   var filterFormSelects = filterForm.querySelector('select');
   var announcementFormSections = window.dragAndDrop.announcementForm.querySelectorAll('fieldset');
+
   var mainPinStartCoords = {
     x: window.dragAndDrop.mapMainPin.offsetLeft,
     y: window.dragAndDrop.mapMainPin.offsetTop
   };
 
-  var inactivate = function () {
+  var inactivateMap = function () {
     window.popup.map.classList.add('map--faded');
     window.dragAndDrop.announcementForm.classList.add('ad-form--disabled');
     filterFormSection.disabled = 'disabled';
@@ -32,12 +33,12 @@
     window.popup.hide();
     window.filtration.mapFilters.reset();
 
-    window.dragAndDrop.mapMainPin.addEventListener('mousedown', activate);
+    window.dragAndDrop.mapMainPin.addEventListener('mousedown', activateMap);
   };
 
-  inactivate();
+  inactivateMap();
 
-  var activate = function () {
+  var activateMap = function () {
     window.popup.map.classList.remove('map--faded');
     window.dragAndDrop.announcementForm.classList.remove('ad-form--disabled');
     filterFormSection.disabled = '';
@@ -52,18 +53,18 @@
       announcementFormSections[j].disabled = '';
     }
 
-    window.dragAndDrop.mapMainPin.removeEventListener('mousedown', activate);
+    window.dragAndDrop.mapMainPin.removeEventListener('mousedown', activateMap);
   };
 
-  window.dragAndDrop.mapMainPin.addEventListener('mousedown', activate);
+  window.dragAndDrop.mapMainPin.addEventListener('mousedown', activateMap);
 
   window.dragAndDrop.mapMainPin.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.utils.ENTER_KEYCODE) {
-      activate();
+    if (evt.keyCode === window.util.ENTER_KEYCODE) {
+      activateMap();
     }
   });
 
   window.map = {
-    inactivate: inactivate
+    inactivate: inactivateMap
   };
 })();

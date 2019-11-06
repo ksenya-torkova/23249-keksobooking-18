@@ -39,8 +39,8 @@
   var housingPriceSelect = window.dragAndDrop.announcementForm.querySelector('#price');
 
   housingTypeSelect.addEventListener('change', function () {
-    housingPriceSelect.placeholder = window.utils.HOUSING_DATA[housingTypeSelect.value].price;
-    housingPriceSelect.min = window.utils.HOUSING_DATA[housingTypeSelect.value].price;
+    housingPriceSelect.placeholder = window.util.HOUSING_DATA[housingTypeSelect.value].price;
+    housingPriceSelect.min = window.util.HOUSING_DATA[housingTypeSelect.value].price;
   });
 
   var onSuccessLoad = function () {
@@ -52,7 +52,7 @@
     });
 
     document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.utils.ESC_KEYCODE) {
+      if (evt.keyCode === window.util.ESC_KEYCODE) {
         successBlock.classList.add('success--hidden');
       }
     });

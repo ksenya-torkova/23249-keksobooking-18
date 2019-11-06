@@ -1,8 +1,7 @@
 'use strict';
 
 (function () {
-  var ENTER_KEYCODE = 13;
-  var ESC_KEYCODE = 27;
+  var DEBOUNCE_INTERVAL = 500;
 
   var HOUSING_DATA = {
     bungalo: {
@@ -26,6 +25,11 @@
     }
   };
 
+  var KeyCodes = {
+    ENTER: 13,
+    ESC: 27
+  };
+
   var numDecline = function (num, nominative, genetiveSingular, genetivePlural) {
     if (num > 10 && (Math.round((num % 100) / 10)) === 1) {
       return genetivePlural;
@@ -41,10 +45,27 @@
     return genetivePlural;
   };
 
-  window.utils = {
-    ENTER_KEYCODE: ENTER_KEYCODE,
-    ESC_KEYCODE: ESC_KEYCODE,
+  var debounce = function (cb) {
+    var lastTimeout = null;
+
+    return function () {
+      var parameters = arguments;
+
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+
+      lastTimeout = window.setTimeout(function () {
+        cb.apply(null, parameters);
+      }, DEBOUNCE_INTERVAL);
+    };
+  };
+
+  window.util = {
+    ENTER_KEYCODE: KeyCodes.ENTER,
+    ESC_KEYCODE: KeyCodes.ESC,
     HOUSING_DATA: HOUSING_DATA,
-    numDecline: numDecline
+    numDecline: numDecline,
+    debounce: debounce
   };
 })();
