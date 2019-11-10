@@ -43,13 +43,15 @@
     housingPriceSelect.min = window.util.HOUSING_DATA[housingTypeSelect.value].price;
   });
 
-  var onSuccessLoad = function () {
-    var successTemplate = document.querySelector('#success').content;
-    var successBlock = successTemplate.querySelector('.success');
+  var successTemplate = document.querySelector('#success').content;
+  var successBlock = successTemplate.querySelector('.success');
 
-    successBlock.addEventListener('click', function () {
-      successBlock.classList.add('success--hidden');
-    });
+  var hideSuccessNote = function () {
+    successBlock.classList.add('success--hidden');
+  };
+
+  var onSuccessLoad = function () {
+    successBlock.addEventListener('click', hideSuccessNote);
 
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.util.ESC_KEYCODE) {
@@ -60,11 +62,20 @@
     window.backend.pageMain.insertAdjacentElement('afterbegin', successBlock);
 
     window.dragAndDrop.announcementForm.reset();
+    window.photo.reset();
     window.map.inactivate();
   };
 
   window.dragAndDrop.announcementForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.backend.request('post', window.backend.SET_DATA_URL, onSuccessLoad, window.backend.onErrorLoad, new FormData(window.dragAndDrop.announcementForm));
+  });
+
+  var announcementFormReset = window.dragAndDrop.announcementForm.querySelector('.ad-form__reset');
+
+  announcementFormReset.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    window.dragAndDrop.announcementForm.reset();
+    window.photo.reset();
   });
 })();
