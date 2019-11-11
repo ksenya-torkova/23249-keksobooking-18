@@ -12,11 +12,11 @@
     var listItemTemplate = cardTemplate.querySelector('.' + listClass + ' li');
     var cardListFragment = document.createDocumentFragment();
 
-    for (var i = 0; i < items.length; i++) {
+    items.forEach(function (item) {
       var listItemMarkup = listItemTemplate.cloneNode(true);
-      listItemMarkup.className = 'popup__feature' + ' popup__feature--' + items[i];
+      listItemMarkup.className = 'popup__feature' + ' popup__feature--' + item;
       cardListFragment.appendChild(listItemMarkup);
-    }
+    });
 
     list.innerHTML = '';
     list.appendChild(cardListFragment);
@@ -27,11 +27,11 @@
     var blockItemTemplate = cardTemplate.querySelector('.' + blockClass + ' .popup__photo');
     var cardblockFragment = document.createDocumentFragment();
 
-    for (var i = 0; i < items.length; i++) {
+    items.forEach(function (item) {
       var blockItemMarkup = blockItemTemplate.cloneNode(true);
-      blockItemMarkup.src = items[i];
+      blockItemMarkup.src = item;
       cardblockFragment.appendChild(blockItemMarkup);
-    }
+    });
 
     block.innerHTML = '';
     block.appendChild(cardblockFragment);

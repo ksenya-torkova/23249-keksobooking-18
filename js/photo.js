@@ -10,7 +10,7 @@
   var housingPreview = window.dragAndDrop.announcementForm.querySelector('.ad-form__photo img');
   var defaultHousingPreview = housingPreview.src;
 
-  var uploadImage = function (uploader, preview) {
+  var onAvatarUpload = function (uploader, preview) {
     var avatar = uploader.files[0];
 
     if (avatar) {
@@ -33,13 +33,12 @@
   };
 
   avatarUploader.addEventListener('change', function () {
-    uploadImage(avatarUploader, avatarPreview);
+    onAvatarUpload(avatarUploader, avatarPreview);
   });
 
   housingUploader.addEventListener('change', function () {
-    uploadImage(housingUploader, housingPreview);
+    onAvatarUpload(housingUploader, housingPreview);
   });
-
 
   var resetUploadedPhotos = function () {
     avatarPreview.src = defaultAvatarPreview;

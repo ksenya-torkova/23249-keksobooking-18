@@ -53,13 +53,13 @@
   var onSuccessLoad = function () {
     successBlock.addEventListener('click', hideSuccessNote);
 
+    window.backend.pageMain.insertAdjacentElement('afterbegin', successBlock);
+
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.util.ESC_KEYCODE) {
-        successBlock.classList.add('success--hidden');
+        hideSuccessNote();
       }
     });
-
-    window.backend.pageMain.insertAdjacentElement('afterbegin', successBlock);
 
     window.dragAndDrop.announcementForm.reset();
     window.photo.reset();
