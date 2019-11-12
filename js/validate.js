@@ -76,6 +76,7 @@
   announcementFormReset.addEventListener('click', function (evt) {
     evt.preventDefault();
     window.dragAndDrop.announcementForm.reset();
+    window.map.inactivate();
     window.photo.reset();
   });
 })();

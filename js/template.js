@@ -109,7 +109,7 @@
   };
 
   window.template = {
-    getTemplateOfCard: getTemplateOfCard,
+    getCard: getTemplateOfCard,
     renderPins: renderPins,
     clearPins: clearPins
   };
