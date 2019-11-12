@@ -75,14 +75,14 @@
 
     if (announcementItem.offer.rooms && announcementItem.offer.guests) {
       cardMarkup.querySelector('.popup__text--capacity').textContent =
-        announcementItem.offer.rooms + ' ' + window.util.numDecline(announcementItem.offer.rooms, 'комната', 'комнаты', 'комнат') + ' для ' +
-        announcementItem.offer.guests + ' ' + window.util.numDecline(announcementItem.offer.guests, 'гостя', 'гостей', 'гостей');
+        announcementItem.offer.rooms + ' ' + window.util.getDeclension(announcementItem.offer.rooms, 'комната', 'комнаты', 'комнат') + ' для ' +
+        announcementItem.offer.guests + ' ' + window.util.getDeclension(announcementItem.offer.guests, 'гостя', 'гостей', 'гостей');
     } else if (announcementItem.offer.rooms) {
       cardMarkup.querySelector('.popup__text--capacity').textContent =
-        announcementItem.offer.rooms + ' ' + window.util.numDecline(announcementItem.offer.rooms, 'комната', 'комнаты', 'комнат');
+        announcementItem.offer.rooms + ' ' + window.util.getDeclension(announcementItem.offer.rooms, 'комната', 'комнаты', 'комнат');
     } else if (announcementItem.offer.guests) {
       cardMarkup.querySelector('.popup__text--capacity').textContent =
-        announcementItem.offer.guests + ' ' + window.util.numDecline(announcementItem.offer.guests, 'гостя', 'гостей', 'гостей');
+        announcementItem.offer.guests + ' ' + window.util.getDeclension(announcementItem.offer.guests, 'гостя', 'гостей', 'гостей');
     } else {
       cardMarkup.querySelector('.popup__text--capacity').classList.add('hidden');
     }
