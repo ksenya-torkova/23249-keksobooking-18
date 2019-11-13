@@ -43,24 +43,35 @@
     housingPriceSelect.min = window.util.HOUSING_DATA[housingTypeSelect.value].price;
   });
 
-  var successTemplate = document.querySelector('#success').content;
-  var successBlock = successTemplate.querySelector('.success');
+  var closeSuccessBlock = function () {
+    var successBlock = window.backend.pageMain.querySelector('.success');
 
-  var hideSuccessNote = function () {
-    successBlock.classList.add('success--hidden');
+    if (successBlock) {
+      successBlock.remove();
+      document.removeEventListener('keydown', onSuccessEsc);
+    }
   };
 
+  var onSuccessEsc = function (evt) {
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
+      closeSuccessBlock();
+    }
+  };
+
+  var onSuccessClick = function () {
+    closeSuccessBlock();
+  };
+
+  var successTemplate = document.querySelector('#success').content;
+  var successTemplateBlock = successTemplate.querySelector('.success');
+
   var onSuccessLoad = function () {
-    successBlock.addEventListener('click', hideSuccessNote);
+    var successBlock = successTemplateBlock.cloneNode(true);
+
+    successBlock.addEventListener('click', onSuccessClick);
+    document.addEventListener('keydown', onSuccessEsc);
 
     window.backend.pageMain.insertAdjacentElement('afterbegin', successBlock);
-
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.util.ESC_KEYCODE) {
-        hideSuccessNote();
-      }
-    });
-
     window.dragAndDrop.announcementForm.reset();
     window.photo.reset();
     window.map.inactivate();

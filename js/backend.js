@@ -16,25 +16,37 @@
   };
 
   var pageMain = document.querySelector('.page-main');
+  var errorTemplate = document.querySelector('#error').content;
+  var errorTemplateBlock = errorTemplate.querySelector('.error');
+
+  var closeErrorBlock = function () {
+    var errorBlock = pageMain.querySelector('.error');
+
+    if (errorBlock) {
+      errorBlock.remove();
+      document.removeEventListener('keydown', onErrorEsc);
+    }
+  };
+
+  var onErrorEsc = function (evt) {
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
+      closeErrorBlock();
+    }
+  };
+
+  var onErrorClick = function () {
+    closeErrorBlock();
+  };
 
   var onErrorLoad = function (message) {
-    var errorTemplate = document.querySelector('#error').content;
-    var errorBlock = errorTemplate.querySelector('.error');
-
-    errorBlock.addEventListener('click', function () {
-      errorBlock.classList.add('error--hidden');
-    });
-
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.util.ESC_KEYCODE) {
-        errorBlock.classList.add('error--hidden');
-      }
-    });
-
+    var errorBlock = errorTemplateBlock.cloneNode(true);
     var errorText = errorBlock.querySelector('.error__message');
 
     errorText.textContent = message;
     pageMain.insertAdjacentElement('afterbegin', errorBlock);
+
+    errorBlock.addEventListener('click', onErrorClick);
+    document.addEventListener('keydown', onErrorEsc);
   };
 
   var getRequestStatus = function (request) {
