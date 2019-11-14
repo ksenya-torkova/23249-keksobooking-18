@@ -2,6 +2,8 @@
 
 (function () {
   var DEBOUNCE_INTERVAL = 500;
+  var DECLENSION_DECADE = 10;
+  var DECLENSION_HUNDRED = 100;
 
   var HOUSING_DATA = {
     bungalo: {
@@ -30,11 +32,11 @@
     ESC: 27
   };
 
-  var numDecline = function (num, nominative, genetiveSingular, genetivePlural) {
-    if (num > 10 && (Math.round((num % 100) / 10)) === 1) {
+  var getDeclension = function (num, nominative, genetiveSingular, genetivePlural) {
+    if (num > DECLENSION_DECADE && (Math.round((num % DECLENSION_HUNDRED) / DECLENSION_DECADE)) === 1) {
       return genetivePlural;
     } else {
-      switch (num % 10) {
+      switch (num % DECLENSION_DECADE) {
         case 1: return nominative;
         case 2:
         case 3:
@@ -65,7 +67,7 @@
     ENTER_KEYCODE: KeyCodes.ENTER,
     ESC_KEYCODE: KeyCodes.ESC,
     HOUSING_DATA: HOUSING_DATA,
-    numDecline: numDecline,
+    getDeclension: getDeclension,
     debounce: debounce
   };
 })();

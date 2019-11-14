@@ -40,7 +40,7 @@
   var filtersBlock = map.querySelector('.map__filters-container');
 
   var getAppropriateAnnouncement = function (announcementItem) {
-    cardFragment.appendChild(window.template.getTemplateOfCard(announcementItem));
+    cardFragment.appendChild(window.template.getCard(announcementItem));
     var currentMapPopup = map.querySelector('.map__card');
 
     if (!currentMapPopup) {
