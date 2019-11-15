@@ -359,6 +359,10 @@ fieldset {
   opacity: 0;
 }
 
+.map--faded .map__filters * {
+  cursor: default;
+}
+
 .map__filter {
   height: 30px;
   margin-right: 10px;
@@ -502,6 +506,24 @@ fieldset {
   opacity: 0.3;
 }
 
+.ad-form--disabled .ad-form-header__drop-zone:hover,
+.ad-form--disabled .ad-form-header__drop-zone:focus,
+.ad-form--disabled .ad-form__drop-zone:hover,
+.ad-form--disabled .ad-form__drop-zone:focus {
+  color: #999999;
+  cursor: default;
+}
+
+.ad-form--disabled .feature:hover,
+.ad-form--disabled .feature:focus {
+  box-shadow: none;
+  cursor: default;
+}
+
+.ad-form--disabled .feature:active {
+  background-color: #fff;
+}
+
 .ad-form-header {
   width: 100%;
   padding-bottom: 20px;
@@ -587,6 +609,30 @@ fieldset {
   min-height: 90px;
 
   font-size: 14px;
+}
+
+.ad-form__element:disabled input:hover,
+.ad-form__element:disabled input:focus,
+.ad-form__element:disabled select:hover,
+.ad-form__element:disabled select:focus,
+.ad-form__element:disabled textarea:hover,
+.ad-form__element:disabled textarea:focus {
+  border-color: #d9d9d3;
+}
+
+.ad-form__element:disabled .ad-form__submit:hover,
+.ad-form__element:disabled .ad-form__submit:focus {
+  border-color: #ffaa99;
+  cursor: default;
+}
+
+.ad-form__element:disabled .ad-form__submit:active {
+  background-color: #fff;
+  color: #353535;
+}
+
+.ad-form__element:disabled .ad-form__reset:hover {
+  cursor: default;
 }
 
 .ad-form__element--wide {
@@ -801,6 +847,7 @@ fieldset {
 }
 
 .ad-form__drop-zone:focus,
+.ad-form-header__input:focus + .ad-form-header__drop-zone,
 .ad-form__input:focus + .ad-form__drop-zone {
   color: #ff5635;
   -webkit-box-shadow: 0 0 2px 2px #ff6547;

@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var DEFAULT_HOUSING_PRICE_PLACEHOLDER = window.dragAndDrop.announcementForm.querySelector('#price').placeholder;
+
   var ROOMS_AMOUNT_VALUES = {
     '1': ['1'],
     '2': ['1', '2'],
@@ -89,5 +91,6 @@
     window.dragAndDrop.announcementForm.reset();
     window.map.inactivate();
     window.photo.reset();
+    housingPriceSelect.placeholder = DEFAULT_HOUSING_PRICE_PLACEHOLDER;
   });
 })();

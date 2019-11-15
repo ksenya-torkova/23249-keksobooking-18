@@ -4,7 +4,7 @@
   var filterForm = window.popup.map.querySelector('.map__filters');
   var filterFormComponents = filterForm.querySelectorAll('fieldset, select');
   var announcementFormSections = window.dragAndDrop.announcementForm.querySelectorAll('fieldset');
-  var formComponents = Array.prototype.concat.call(filterFormComponents, announcementFormSections);
+  var formComponents = Array.from(filterFormComponents).concat(Array.from(announcementFormSections));
 
   var mainPinStartCoords = {
     x: window.dragAndDrop.mapMainPin.offsetLeft,
