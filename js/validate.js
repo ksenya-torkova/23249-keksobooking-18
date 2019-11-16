@@ -80,12 +80,12 @@
   var successTemplate = successMarkup.querySelector('.success');
 
   var onSuccessLoad = function () {
-    var successBlock = successTemplate.cloneNode(true);
+    var success = successTemplate.cloneNode(true);
 
-    successBlock.addEventListener('click', onSuccessClick);
+    success.addEventListener('click', onSuccessClick);
     document.addEventListener('keydown', onSuccessEsc);
 
-    window.backend.pageMain.insertAdjacentElement('afterbegin', successBlock);
+    window.backend.pageMain.insertAdjacentElement('afterbegin', success);
     resetForm();
   };
 
