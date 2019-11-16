@@ -112,9 +112,9 @@
     }
 
     if (announcementItem.offer.photos.length > 0) {
-      var cardPhotosBlock = cardMarkup.querySelector('.popup__photos');
+      var cardPhotos = cardMarkup.querySelector('.popup__photos');
 
-      getCardPhotos(cardPhotosBlock, announcementItem.offer.photos);
+      getCardPhotos(cardPhotos, announcementItem.offer.photos);
     } else {
       cardMarkup.querySelector('.popup__photos').classList.add('hidden');
     }
@@ -123,7 +123,7 @@
   };
 
   var pinFragment = document.createDocumentFragment();
-  var pinsBlock = window.popup.map.querySelector('.map__pins');
+  var containerOfPins = window.popup.map.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content;
   var pinTemplateItem = pinTemplate.querySelector('.map__pin');
 
@@ -156,11 +156,11 @@
       pinFragment.appendChild(getTemplateOfPin(announcementItems[i]));
     }
 
-    pinsBlock.appendChild(pinFragment);
+    containerOfPins.appendChild(pinFragment);
   };
 
   var clearPins = function () {
-    var pins = pinsBlock.querySelectorAll('.map__pin:not(.map__pin--main)');
+    var pins = containerOfPins.querySelectorAll('.map__pin:not(.map__pin--main)');
 
     pins.forEach(function (pin) {
       pin.remove();

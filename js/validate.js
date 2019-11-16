@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var DEFAULT_HOUSING_PRICE = 1000;
+
   var ROOMS_AMOUNT_VALUES = {
     '1': ['1'],
     '2': ['1', '2'],
@@ -44,10 +46,10 @@
   });
 
   var closeSuccessBlock = function () {
-    var successBlock = window.backend.pageMain.querySelector('.success');
+    var successTemplate = window.backend.pageMain.querySelector('.success');
 
-    if (successBlock) {
-      successBlock.remove();
+    if (successTemplate) {
+      successTemplate.remove();
       document.removeEventListener('keydown', onSuccessEsc);
     }
   };
@@ -62,19 +64,29 @@
     closeSuccessBlock();
   };
 
-  var successTemplate = document.querySelector('#success').content;
-  var successTemplateBlock = successTemplate.querySelector('.success');
+  var resetHousingPrice = function () {
+    housingPriceSelect.placeholder = DEFAULT_HOUSING_PRICE;
+    housingPriceSelect.min = DEFAULT_HOUSING_PRICE;
+  };
 
-  var onSuccessLoad = function () {
-    var successBlock = successTemplateBlock.cloneNode(true);
-
-    successBlock.addEventListener('click', onSuccessClick);
-    document.addEventListener('keydown', onSuccessEsc);
-
-    window.backend.pageMain.insertAdjacentElement('afterbegin', successBlock);
-    window.dragAndDrop.announcementForm.reset();
+  var resetForm = function () {
     window.photo.reset();
     window.map.inactivate();
+    window.dragAndDrop.announcementForm.reset();
+    resetHousingPrice();
+  };
+
+  var successMarkup = document.querySelector('#success').content;
+  var successTemplate = successMarkup.querySelector('.success');
+
+  var onSuccessLoad = function () {
+    var success = successTemplate.cloneNode(true);
+
+    success.addEventListener('click', onSuccessClick);
+    document.addEventListener('keydown', onSuccessEsc);
+
+    window.backend.pageMain.insertAdjacentElement('afterbegin', success);
+    resetForm();
   };
 
   window.dragAndDrop.announcementForm.addEventListener('submit', function (evt) {
@@ -86,8 +98,6 @@
 
   announcementFormReset.addEventListener('click', function (evt) {
     evt.preventDefault();
-    window.dragAndDrop.announcementForm.reset();
-    window.map.inactivate();
-    window.photo.reset();
+    resetForm();
   });
 })();

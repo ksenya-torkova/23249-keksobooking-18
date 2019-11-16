@@ -16,14 +16,14 @@
   };
 
   var pageMain = document.querySelector('.page-main');
-  var errorTemplate = document.querySelector('#error').content;
-  var errorTemplateBlock = errorTemplate.querySelector('.error');
+  var errorMarkup = document.querySelector('#error').content;
+  var errorTemplate = errorMarkup.querySelector('.error');
 
   var closeErrorBlock = function () {
-    var errorBlock = pageMain.querySelector('.error');
+    var error = pageMain.querySelector('.error');
 
-    if (errorBlock) {
-      errorBlock.remove();
+    if (error) {
+      error.remove();
       document.removeEventListener('keydown', onErrorEsc);
     }
   };
@@ -39,13 +39,13 @@
   };
 
   var onErrorLoad = function (message) {
-    var errorBlock = errorTemplateBlock.cloneNode(true);
-    var errorText = errorBlock.querySelector('.error__message');
+    var error = errorTemplate.cloneNode(true);
+    var errorText = error.querySelector('.error__message');
 
     errorText.textContent = message;
-    pageMain.insertAdjacentElement('afterbegin', errorBlock);
+    pageMain.insertAdjacentElement('afterbegin', error);
 
-    errorBlock.addEventListener('click', onErrorClick);
+    error.addEventListener('click', onErrorClick);
     document.addEventListener('keydown', onErrorEsc);
   };
 
