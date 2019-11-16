@@ -355,12 +355,12 @@ fieldset {
   opacity: 1;
 }
 
-.map--faded .map__filters {
-  opacity: 0;
+.map--faded .map__filters-container * {
+  cursor: default;
 }
 
-.map--faded .map__filters * {
-  cursor: default;
+.map__filters--faded {
+  opacity: 0;
 }
 
 .map__filter {
@@ -504,6 +504,7 @@ fieldset {
 
 .ad-form--disabled {
   opacity: 0.3;
+  cursor: default;
 }
 
 .ad-form--disabled .ad-form-header__drop-zone:hover,
@@ -522,6 +523,11 @@ fieldset {
 
 .ad-form--disabled .feature:active {
   background-color: #fff;
+}
+
+.ad-form--disabled .features .feature__checkbox,
+.ad-form--disabled .feature {
+  cursor: default;
 }
 
 .ad-form-header {

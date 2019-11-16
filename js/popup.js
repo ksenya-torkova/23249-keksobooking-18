@@ -37,14 +37,14 @@
   };
 
   var cardFragment = document.createDocumentFragment();
-  var filtersBlock = map.querySelector('.map__filters-container');
+  var containerOfFilters = map.querySelector('.map__filters-container');
 
   var getAppropriateAnnouncement = function (announcementItem) {
     cardFragment.appendChild(window.template.getCard(announcementItem));
     var currentMapPopup = map.querySelector('.map__card');
 
     if (!currentMapPopup) {
-      map.insertBefore(cardFragment, filtersBlock);
+      map.insertBefore(cardFragment, containerOfFilters);
     } else {
       map.replaceChild(cardFragment, currentMapPopup);
     }

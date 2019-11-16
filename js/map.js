@@ -1,8 +1,7 @@
 'use strict';
 
 (function () {
-  var filterForm = window.popup.map.querySelector('.map__filters');
-  var filterFormComponents = filterForm.querySelectorAll('fieldset, select');
+  var filterFormComponents = window.filtration.mapFilters.querySelectorAll('fieldset, select');
   var announcementFormSections = window.dragAndDrop.announcementForm.querySelectorAll('fieldset');
   var formComponents = Array.from(filterFormComponents).concat(Array.from(announcementFormSections));
 
@@ -31,13 +30,14 @@
     window.template.clearPins();
     window.popup.hide();
     window.filtration.mapFilters.reset();
+    window.filtration.mapFilters.classList.add('map__filters--faded');
 
-    window.dragAndDrop.mapMainPin.addEventListener('mousedown', activateMap);
+    window.dragAndDrop.mapMainPin.addEventListener('mousedown', onMapActivate);
   };
 
   inactivateMap();
 
-  var activateMap = function () {
+  var onMapActivate = function () {
     window.popup.map.classList.remove('map--faded');
     window.dragAndDrop.announcementForm.classList.remove('ad-form--disabled');
 
@@ -45,14 +45,14 @@
 
     toggleFormActivity(formComponents);
 
-    window.dragAndDrop.mapMainPin.removeEventListener('mousedown', activateMap);
+    window.dragAndDrop.mapMainPin.removeEventListener('mousedown', onMapActivate);
   };
 
-  window.dragAndDrop.mapMainPin.addEventListener('mousedown', activateMap);
+  window.dragAndDrop.mapMainPin.addEventListener('mousedown', onMapActivate);
 
   window.dragAndDrop.mapMainPin.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.util.ENTER_KEYCODE) {
-      activateMap();
+      onMapActivate();
     }
   });
 

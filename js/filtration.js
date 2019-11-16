@@ -2,13 +2,13 @@
 
 (function () {
   var pinsData = [];
+  var mapFilters = window.popup.map.querySelector('.map__filters');
 
   var onSuccessPinsLoad = function (data) {
     pinsData = data;
     window.template.renderPins(pinsData);
+    mapFilters.classList.remove('map__filters--faded');
   };
-
-  var mapFilters = window.popup.map.querySelector('.map__filters');
 
   var priceValues = {
     'low': {

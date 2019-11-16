@@ -16,8 +16,8 @@
   };
 
   var pageMain = document.querySelector('.page-main');
-  var errorTemplate = document.querySelector('#error').content;
-  var errorTemplateBlock = errorTemplate.querySelector('.error');
+  var errorMarkup = document.querySelector('#error').content;
+  var errorTemplate = errorMarkup.querySelector('.error');
 
   var closeErrorBlock = function () {
     var errorBlock = pageMain.querySelector('.error');
@@ -39,7 +39,7 @@
   };
 
   var onErrorLoad = function (message) {
-    var errorBlock = errorTemplateBlock.cloneNode(true);
+    var errorBlock = errorTemplate.cloneNode(true);
     var errorText = errorBlock.querySelector('.error__message');
 
     errorText.textContent = message;

@@ -13,12 +13,12 @@
   var avatarPreview = window.dragAndDrop.announcementForm.querySelector('.ad-form-header__preview img');
   var defaultAvatarPreview = avatarPreview.src;
   var housingUploader = window.dragAndDrop.announcementForm.querySelector('.ad-form__input');
-  var housingPreviewBlock = window.dragAndDrop.announcementForm.querySelector('.ad-form__photo');
-  var housingPreview = document.createElement('img');
+  var housingPreview = window.dragAndDrop.announcementForm.querySelector('.ad-form__photo');
+  var housingPreviewImg = document.createElement('img');
 
-  housingPreview.alt = HousingPreview.ALT;
-  housingPreview.width = HousingPreview.WIDTH;
-  housingPreview.height = HousingPreview.HEIGHT;
+  housingPreviewImg.alt = HousingPreview.ALT;
+  housingPreviewImg.width = HousingPreview.WIDTH;
+  housingPreviewImg.height = HousingPreview.HEIGHT;
 
   var onAvatarUpload = function (uploader, preview) {
     var avatar = uploader.files[0];
@@ -38,10 +38,10 @@
             preview.src = avatarReader.result;
           });
         } else {
-          preview.insertAdjacentElement('afterbegin', housingPreview);
+          preview.insertAdjacentElement('afterbegin', housingPreviewImg);
 
           avatarReader.addEventListener('load', function () {
-            housingPreview.src = avatarReader.result;
+            housingPreviewImg.src = avatarReader.result;
           });
         }
 
@@ -55,12 +55,12 @@
   });
 
   housingUploader.addEventListener('change', function () {
-    onAvatarUpload(housingUploader, housingPreviewBlock);
+    onAvatarUpload(housingUploader, housingPreview);
   });
 
   var resetUploadedPhotos = function () {
     avatarPreview.src = defaultAvatarPreview;
-    housingPreview.remove();
+    housingPreviewImg.remove();
   };
 
   window.photo = {
